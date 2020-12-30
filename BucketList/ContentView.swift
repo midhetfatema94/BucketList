@@ -6,13 +6,13 @@
 //
 
 import SwiftUI
-import LocalAuthentication
+//import LocalAuthentication
 import MapKit
 
 struct ContentView: View {
     @State private var isUnlocked = false
     @State private var centerCoordinate = CLLocationCoordinate2D()
-    @State private var locations = [MKPointAnnotation]()
+    @State private var locations = [CodableMKPointAnnotation]()
     @State private var selectedPlace: MKPointAnnotation?
     @State private var showingPlaceDetails = false
     @State private var showingEditScreen = false
@@ -42,15 +42,7 @@ struct ContentView: View {
                 HStack {
                     Spacer()
                     
-                    Button(action: {
-                        let newLocation = MKPointAnnotation()
-                        newLocation.coordinate = self.centerCoordinate
-                        newLocation.title = "Example location"
-                        let filteredLocations = locations.first(where: { $0 == newLocation })
-                        if filteredLocations == nil {
-                            self.locations.append(newLocation)
-                        }
-                    }, label: {
+                    Button(action: addNewPin, label: {
                         Image(systemName: "plus")
                     })
                     .padding()
@@ -62,42 +54,81 @@ struct ContentView: View {
                 }
             }
         }
-//        .onAppear(perform: authenticate)
+        .onAppear(perform: loadData)
         .alert(isPresented: $showingPlaceDetails) {
             Alert(title: Text(selectedPlace?.title ?? "Unknown"), message: Text(selectedPlace?.subtitle ?? "Missing place information."), primaryButton: .default(Text("OK")), secondaryButton: .default(Text("Edit")) {
                 self.showingEditScreen = true
             })
         }
-        .sheet(isPresented: $showingEditScreen) {
+        .sheet(isPresented: $showingEditScreen, onDismiss: saveData) {
             if let place = self.selectedPlace {
                 EditView(placemark: place)
             }
         }
     }
     
-    func authenticate() {
-        let context = LAContext()
-        var error: NSError?
-
-        // check whether biometric authentication is possible
-        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
-            // it's possible, so go ahead and use it
-            let reason = "We need to unlock your data."
-
-            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, authenticationError in
-                // authentication has now completed
-                DispatchQueue.main.async {
-                    if success {
-                        // authenticated successfully
-                    } else {
-                        // there was a problem
-                    }
-                }
-            }
-        } else {
-            // no biometrics
+    func addNewPin() {
+        let newLocation = CodableMKPointAnnotation()
+        newLocation.coordinate = self.centerCoordinate
+        newLocation.title = "Example location"
+        let filteredLocations = locations.first(where: { $0 == newLocation })
+        if filteredLocations == nil {
+            self.locations.append(newLocation)
         }
     }
+    
+    func getDocumentsDirectory() -> URL {
+        // find all possible documents directories for this user
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+
+        // just send back the first one, which ought to be the only one
+        return paths[0]
+    }
+    
+    func loadData() {
+        let filename = getDocumentsDirectory().appendingPathComponent("SavedPlaces")
+        do {
+            let data = try Data(contentsOf: filename)
+            locations = try JSONDecoder().decode([CodableMKPointAnnotation].self, from: data)
+        } catch {
+            print("Unable to load saved data.")
+        }
+    }
+    
+    func saveData() {
+        do {
+            let filename = getDocumentsDirectory().appendingPathComponent("SavedPlaces")
+            let data = try JSONEncoder().encode(self.locations)
+            try data.write(to: filename, options: [.atomicWrite, .completeFileProtection])
+            print("Pin data saved")
+        } catch {
+            print("Unable to save data.")
+        }
+    }
+    
+//    func authenticate() {
+//        let context = LAContext()
+//        var error: NSError?
+//
+//        // check whether biometric authentication is possible
+//        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+//            // it's possible, so go ahead and use it
+//            let reason = "We need to unlock your data."
+//
+//            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, authenticationError in
+//                // authentication has now completed
+//                DispatchQueue.main.async {
+//                    if success {
+//                        // authenticated successfully
+//                    } else {
+//                        // there was a problem
+//                    }
+//                }
+//            }
+//        } else {
+//            // no biometrics
+//        }
+//    }
 }
 
 extension MKPointAnnotation: Comparable {
