@@ -11,7 +11,6 @@
 		83EDF38D259B4ACB00FE326F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EDF38C259B4ACB00FE326F /* ContentView.swift */; };
 		83EDF38F259B4ACD00FE326F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 83EDF38E259B4ACD00FE326F /* Assets.xcassets */; };
 		83EDF392259B4ACD00FE326F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 83EDF391259B4ACD00FE326F /* Preview Assets.xcassets */; };
-		83EDF39B259B528B00FE326F /* FileManagerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EDF39A259B528B00FE326F /* FileManagerExtension.swift */; };
 		83EDF39E259B5F8500FE326F /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EDF39D259B5F8500FE326F /* MapView.swift */; };
 		83EDF3A1259C9E7600FE326F /* MapCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EDF3A0259C9E7500FE326F /* MapCoordinator.swift */; };
 		83EDF3A4259CA04B00FE326F /* MKPointAnnotation-ObservableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EDF3A3259CA04B00FE326F /* MKPointAnnotation-ObservableObject.swift */; };
@@ -27,7 +26,6 @@
 		83EDF38E259B4ACD00FE326F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		83EDF391259B4ACD00FE326F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		83EDF393259B4ACD00FE326F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		83EDF39A259B528B00FE326F /* FileManagerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerExtension.swift; sourceTree = "<group>"; };
 		83EDF39D259B5F8500FE326F /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		83EDF3A0259C9E7500FE326F /* MapCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapCoordinator.swift; sourceTree = "<group>"; };
 		83EDF3A3259CA04B00FE326F /* MKPointAnnotation-ObservableObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKPointAnnotation-ObservableObject.swift"; sourceTree = "<group>"; };
@@ -70,7 +68,6 @@
 				83EDF38C259B4ACB00FE326F /* ContentView.swift */,
 				83EDF3AA259CA52400FE326F /* Result.swift */,
 				83EDF3AD259CAA6100FE326F /* MKPointAnnotation-Codable.swift */,
-				83EDF39A259B528B00FE326F /* FileManagerExtension.swift */,
 				83EDF39D259B5F8500FE326F /* MapView.swift */,
 				83EDF3A3259CA04B00FE326F /* MKPointAnnotation-ObservableObject.swift */,
 				83EDF3A6259CA0B700FE326F /* EditView.swift */,
@@ -162,7 +159,6 @@
 				83EDF38D259B4ACB00FE326F /* ContentView.swift in Sources */,
 				83EDF3A4259CA04B00FE326F /* MKPointAnnotation-ObservableObject.swift in Sources */,
 				83EDF39E259B5F8500FE326F /* MapView.swift in Sources */,
-				83EDF39B259B528B00FE326F /* FileManagerExtension.swift in Sources */,
 				83EDF3A7259CA0B700FE326F /* EditView.swift in Sources */,
 				83EDF3A1259C9E7600FE326F /* MapCoordinator.swift in Sources */,
 				83EDF3AE259CAA6100FE326F /* MKPointAnnotation-Codable.swift in Sources */,

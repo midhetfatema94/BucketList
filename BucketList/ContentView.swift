@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-//import LocalAuthentication
+import LocalAuthentication
 import MapKit
 
 struct ContentView: View {
@@ -19,39 +19,43 @@ struct ContentView: View {
     
     var body: some View {
         ZStack {
-//            if self.isUnlocked {
-//                Text("Unlocked")
-//            } else {
-//                Text("Locked")
-//            }
-            
-            MapView(centerCoordinate: $centerCoordinate,
-                    selectedPlace: self.$selectedPlace,
-                    showingPlaceDetails: self.$showingPlaceDetails,
-                    annotations: locations)
-                .edgesIgnoringSafeArea(.all)
-            
-            Circle()
-                .fill(Color.blue)
-                .opacity(0.3)
-                .frame(width: 32, height: 32)
-            
-            VStack {
-                Spacer()
+            if self.isUnlocked {
+                MapView(centerCoordinate: $centerCoordinate,
+                        selectedPlace: self.$selectedPlace,
+                        showingPlaceDetails: self.$showingPlaceDetails,
+                        annotations: locations)
+                    .edgesIgnoringSafeArea(.all)
                 
-                HStack {
+                Circle()
+                    .fill(Color.blue)
+                    .opacity(0.3)
+                    .frame(width: 32, height: 32)
+                
+                VStack {
                     Spacer()
                     
-                    Button(action: addNewPin, label: {
-                        Image(systemName: "plus")
-                    })
-                    .padding()
-                    .background(Color.black.opacity(0.75))
-                    .foregroundColor(.white)
-                    .font(.title)
-                    .clipShape(Circle())
-                    .padding([.trailing, .bottom])
+                    HStack {
+                        Spacer()
+                        
+                        Button(action: addNewPin, label: {
+                            Image(systemName: "plus")
+                        })
+                        .padding()
+                        .background(Color.black.opacity(0.75))
+                        .foregroundColor(.white)
+                        .font(.title)
+                        .clipShape(Circle())
+                        .padding([.trailing, .bottom])
+                    }
                 }
+            } else {
+                Button(action: authenticate, label: {
+                    Text("Unlock Places")
+                })
+                .padding()
+                .background(Color.blue)
+                .foregroundColor(.white)
+                .clipShape(Capsule())
             }
         }
         .onAppear(perform: loadData)
@@ -106,29 +110,29 @@ struct ContentView: View {
         }
     }
     
-//    func authenticate() {
-//        let context = LAContext()
-//        var error: NSError?
-//
-//        // check whether biometric authentication is possible
-//        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
-//            // it's possible, so go ahead and use it
-//            let reason = "We need to unlock your data."
-//
-//            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, authenticationError in
-//                // authentication has now completed
-//                DispatchQueue.main.async {
-//                    if success {
-//                        // authenticated successfully
-//                    } else {
-//                        // there was a problem
-//                    }
-//                }
-//            }
-//        } else {
-//            // no biometrics
-//        }
-//    }
+    func authenticate() {
+        let context = LAContext()
+        var error: NSError?
+
+        // check whether biometric authentication is possible
+        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+            // it's possible, so go ahead and use it
+            let reason = "Please authenticate yourself to unloack your places"
+
+            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, authenticationError in
+                // authentication has now completed
+                DispatchQueue.main.async {
+                    if success {
+                        self.isUnlocked = true
+                    } else {
+                        // there was a problem
+                    }
+                }
+            }
+        } else {
+            // no biometrics
+        }
+    }
 }
 
 extension MKPointAnnotation: Comparable {
