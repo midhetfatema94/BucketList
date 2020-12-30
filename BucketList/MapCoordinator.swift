@@ -49,6 +49,8 @@ class MapCoordinator: NSObject, MKMapViewDelegate {
         guard let placemark = view.annotation as? MKPointAnnotation else { return }
 
         parent.selectedPlace = placemark
+        parent.alertTitle = placemark.title ?? "Missing Place"
+        parent.alertMessage = placemark.subtitle
         parent.showingPlaceDetails = true
     }
 }

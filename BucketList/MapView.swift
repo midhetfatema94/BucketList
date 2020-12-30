@@ -13,19 +13,16 @@ struct MapView: UIViewRepresentable {
     @Binding var selectedPlace: MKPointAnnotation?
     @Binding var showingPlaceDetails: Bool
     
+    @Binding var alertTitle: String
+    @Binding var alertMessage: String?
+    
     var annotations: [MKPointAnnotation]
     
     func makeUIView(context: Context) -> MKMapView {
         let mapView = MKMapView()
         //Binding the delegate of this view to the updates from the coordinator
         mapView.delegate = context.coordinator
-        
-//        let annotation = MKPointAnnotation()
-//        annotation.title = "London"
-//        annotation.subtitle = "Capital of England"
-//        annotation.coordinate = CLLocationCoordinate2D(latitude: 51.5, longitude: 0.13)
-//        mapView.addAnnotation(annotation)
-        
+
         return mapView
     }
     
@@ -42,8 +39,8 @@ struct MapView: UIViewRepresentable {
 }
 
 extension MKPointAnnotation {
-    static var example: MKPointAnnotation {
-        let annotation = MKPointAnnotation()
+    static var example: CodableMKPointAnnotation {
+        let annotation = CodableMKPointAnnotation()
         annotation.title = "London"
         annotation.subtitle = "Home to the 2012 Summer Olympics."
         annotation.coordinate = CLLocationCoordinate2D(latitude: 51.5, longitude: -0.13)

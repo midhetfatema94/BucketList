@@ -17,6 +17,7 @@
 		83EDF3A7259CA0B700FE326F /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EDF3A6259CA0B700FE326F /* EditView.swift */; };
 		83EDF3AB259CA52400FE326F /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EDF3AA259CA52400FE326F /* Result.swift */; };
 		83EDF3AE259CAA6100FE326F /* MKPointAnnotation-Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EDF3AD259CAA6100FE326F /* MKPointAnnotation-Codable.swift */; };
+		83EDF3B2259CD3EA00FE326F /* FloatingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EDF3B1259CD3EA00FE326F /* FloatingButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		83EDF3A6259CA0B700FE326F /* EditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditView.swift; sourceTree = "<group>"; };
 		83EDF3AA259CA52400FE326F /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		83EDF3AD259CAA6100FE326F /* MKPointAnnotation-Codable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKPointAnnotation-Codable.swift"; sourceTree = "<group>"; };
+		83EDF3B1259CD3EA00FE326F /* FloatingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingButton.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +66,7 @@
 		83EDF389259B4ACB00FE326F /* BucketList */ = {
 			isa = PBXGroup;
 			children = (
+				83EDF3B1259CD3EA00FE326F /* FloatingButton.swift */,
 				83EDF38A259B4ACB00FE326F /* BucketListApp.swift */,
 				83EDF38C259B4ACB00FE326F /* ContentView.swift */,
 				83EDF3AA259CA52400FE326F /* Result.swift */,
@@ -158,6 +161,7 @@
 			files = (
 				83EDF38D259B4ACB00FE326F /* ContentView.swift in Sources */,
 				83EDF3A4259CA04B00FE326F /* MKPointAnnotation-ObservableObject.swift in Sources */,
+				83EDF3B2259CD3EA00FE326F /* FloatingButton.swift in Sources */,
 				83EDF39E259B5F8500FE326F /* MapView.swift in Sources */,
 				83EDF3A7259CA0B700FE326F /* EditView.swift in Sources */,
 				83EDF3A1259C9E7600FE326F /* MapCoordinator.swift in Sources */,

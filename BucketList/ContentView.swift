@@ -14,15 +14,20 @@ struct ContentView: View {
     @State private var centerCoordinate = CLLocationCoordinate2D()
     @State private var locations = [CodableMKPointAnnotation]()
     @State private var selectedPlace: MKPointAnnotation?
-    @State private var showingPlaceDetails = false
     @State private var showingEditScreen = false
+    
+    @State private var showAlert = false
+    @State private var alertTitle = ""
+    @State private var alertMessage: String?
     
     var body: some View {
         ZStack {
             if self.isUnlocked {
                 MapView(centerCoordinate: $centerCoordinate,
                         selectedPlace: self.$selectedPlace,
-                        showingPlaceDetails: self.$showingPlaceDetails,
+                        showingPlaceDetails: self.$showAlert,
+                        alertTitle: self.$alertTitle,
+                        alertMessage: self.$alertMessage,
                         annotations: locations)
                     .edgesIgnoringSafeArea(.all)
                 
@@ -31,23 +36,9 @@ struct ContentView: View {
                     .opacity(0.3)
                     .frame(width: 32, height: 32)
                 
-                VStack {
-                    Spacer()
-                    
-                    HStack {
-                        Spacer()
-                        
-                        Button(action: addNewPin, label: {
-                            Image(systemName: "plus")
-                        })
-                        .padding()
-                        .background(Color.black.opacity(0.75))
-                        .foregroundColor(.white)
-                        .font(.title)
-                        .clipShape(Circle())
-                        .padding([.trailing, .bottom])
-                    }
-                }
+                FloatingButton(centerCoordinate: $centerCoordinate,
+                               locations: $locations)
+                
             } else {
                 Button(action: authenticate, label: {
                     Text("Unlock Places")
@@ -58,9 +49,8 @@ struct ContentView: View {
                 .clipShape(Capsule())
             }
         }
-        .onAppear(perform: loadData)
-        .alert(isPresented: $showingPlaceDetails) {
-            Alert(title: Text(selectedPlace?.title ?? "Unknown"), message: Text(selectedPlace?.subtitle ?? "Missing place information."), primaryButton: .default(Text("OK")), secondaryButton: .default(Text("Edit")) {
+        .alert(isPresented: $showAlert) {
+            Alert(title: Text(alertTitle), message: Text(alertMessage ?? "Missing place information."), primaryButton: .default(Text("OK")), secondaryButton: .default(Text("Edit")) {
                 self.showingEditScreen = true
             })
         }
@@ -68,16 +58,6 @@ struct ContentView: View {
             if let place = self.selectedPlace {
                 EditView(placemark: place)
             }
-        }
-    }
-    
-    func addNewPin() {
-        let newLocation = CodableMKPointAnnotation()
-        newLocation.coordinate = self.centerCoordinate
-        newLocation.title = "Example location"
-        let filteredLocations = locations.first(where: { $0 == newLocation })
-        if filteredLocations == nil {
-            self.locations.append(newLocation)
         }
     }
     
@@ -124,13 +104,18 @@ struct ContentView: View {
                 DispatchQueue.main.async {
                     if success {
                         self.isUnlocked = true
+                        self.loadData()
                     } else {
-                        // there was a problem
+                        self.isUnlocked = false
+                        self.alertTitle = "Authentication Failed"
+                        self.alertMessage = "The biometrics could not be authenticated"
+                        self.showAlert = true
                     }
                 }
             }
         } else {
             // no biometrics
+            self.isUnlocked = true
         }
     }
 }
